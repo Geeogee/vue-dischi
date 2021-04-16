@@ -29,6 +29,11 @@ function initVue() {
                         this.genres.push(genre)
                 })
             },
+
+            sortByYear: function() {
+
+                this.music.sort((a,b) => a.year - b.year)
+            }
         },
 
         computed: {
@@ -58,12 +63,11 @@ function initVue() {
 
                     this.music = data.data.response;
                     this.getMusicGenres();
-                    console.log(this.genres);
+                    this.sortByYear();
+                    console.log(this.genres, this.music);
                     
                 })
                 .catch(() => console.log("Error!"));
-
-                
         }
     })
 }
