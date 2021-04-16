@@ -35,10 +35,7 @@ function initVue() {
 
             sortByYear: function() {
 
-                return this.music.sort((a,b) => {
-                    // console.log(a.year,b.year, a.year - b.year);
-                    return a.year - b.year
-                })
+                return this.music.sort((a,b) => a.year - b.year)
             },
 
             filterByGenre: function() {
@@ -48,24 +45,21 @@ function initVue() {
                     return this.sortByYear
                 } else {
 
-                    return this.sortByYear.filter(song => {
-
-                        return song.genre == this.filterKey
-                    })
+                    return this.sortByYear.filter(song => song.genre == this.filterKey)
                 } 
             },
 
             getGenres: function() {
 
-                const genresTest = [];
+                const genres = [];
                 this.music.forEach(song => {
 
                     const genre = song.genre;
-                    if (!genresTest.includes(genre))
-                        genresTest.push(genre)
-                })
+                    if (!genres.includes(genre))
+                        genres.push(genre)
+                });
 
-                return genresTest
+                return genres
             }
         },
 
@@ -75,12 +69,7 @@ function initVue() {
                 .get("https://flynn.boolean.careers/exercises/api/array/music")
                 .then(data => {
 
-                    this.music = data.data.response;
-                    
-                    this.getMusicGenres();
-                    
-                    console.log(this.genres, this.music);
-                    
+                    this.music = data.data.response;                  
                 })
                 .catch(() => console.log("Error!"));
         }
