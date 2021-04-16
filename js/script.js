@@ -14,56 +14,71 @@ function initVue() {
         data : {
 
             "music" : [],
-            "genres" : ["All"],
             "filterKey" : ""
         },
 
-        methods: {
+        // methods: {
 
-            getMusicGenres: function() {
+        //     getMusicGenres: function() {
 
-                this.music.forEach(song => {
+        //         this.music.forEach(song => {
 
-                    const genre = song.genre;
-                    if (!this.genres.includes(genre))
-                        this.genres.push(genre)
-                })
-            },
+        //             const genre = song.genre;
+        //             if (!this.genres.includes(genre))
+        //                 this.genres.push(genre)
+        //         })
+        //     }
 
-            sortByYear: function() {
-
-                this.music.sort((a,b) => a.year - b.year)
-            }
-        },
+        // },
 
         computed: {
 
+            sortByYear: function() {
+
+                return this.music.sort((a,b) => {
+                    // console.log(a.year,b.year, a.year - b.year);
+                    return a.year - b.year
+                })
+            },
+
             filterByGenre: function() {
 
-                if (this.filterKey == "All") {
+                if (this.filterKey == "") {
 
-                    return this.music
+                    return this.sortByYear
                 } else {
 
-                    return this.music.filter(song => {
+                    return this.sortByYear.filter(song => {
 
                         return song.genre == this.filterKey
                     })
                 } 
+            },
+
+            getGenres: function() {
+
+                const genresTest = [];
+                this.music.forEach(song => {
+
+                    const genre = song.genre;
+                    if (!genresTest.includes(genre))
+                        genresTest.push(genre)
+                })
+
+                return genresTest
             }
         },
 
         mounted() {
-
-            this.filterKey = this.genres[0];
 
             axios
                 .get("https://flynn.boolean.careers/exercises/api/array/music")
                 .then(data => {
 
                     this.music = data.data.response;
+                    
                     this.getMusicGenres();
-                    this.sortByYear();
+                    
                     console.log(this.genres, this.music);
                     
                 })
