@@ -29,11 +29,6 @@ function initVue() {
                         this.genres.push(genre)
                 })
             },
-
-            getGenre: function() {
-
-                console.log(this.filterKey)
-            }
         },
 
         computed: {
@@ -53,14 +48,9 @@ function initVue() {
             }
         },
 
-        created() {
-
-            if (this.genres) {
-                this.filterKey = this.genres[0]
-            }  
-        },
-
         mounted() {
+
+            this.filterKey = this.genres[0];
 
             axios
                 .get("https://flynn.boolean.careers/exercises/api/array/music")
@@ -71,7 +61,9 @@ function initVue() {
                     console.log(this.genres);
                     
                 })
-                .catch(() => console.log("Error!"))
+                .catch(() => console.log("Error!"));
+
+                
         }
     })
 }

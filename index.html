@@ -25,8 +25,8 @@
 
         <div id="app" class="music-library">
             <div id="menu">
-                <select @change="getGenre" v-model="filterKey">
-                    <option v-for="(genre,index) in genres">{{ genre }}</option>
+                <select v-model="filterKey">
+                    <option v-for="genre in genres">{{ genre }}</option>
                 </select>
             </div>
             
